@@ -26,9 +26,9 @@ class App extends Component {
         this.mouseOverCells = this.mouseOverCells.bind(this);
         this.mouseOutCells = this.mouseOutCells.bind(this);
         this.SetEnabledRowDeleteButton = this.SetEnabledRowDeleteButton.bind(this);
-        this.SetEnabledColDeleteButton = this.SetEnabledColDeleteButton.bind(this);
-        this.SetDisabledRowDeleteButton = this.SetDisabledRowDeleteButton.bind(this);
-        this.SetDisabledColDeleteButton = this.SetDisabledColDeleteButton.bind(this);
+        this.setEnabledColDeleteButton = this.setEnabledColDeleteButton.bind(this);
+        this.setDisabledRowDeleteButton = this.setDisabledRowDeleteButton.bind(this);
+        this.setDisabledColDeleteButton = this.setDisabledColDeleteButton.bind(this);
     }
 
     componentWillMount(){
@@ -62,8 +62,8 @@ class App extends Component {
     }
 
     mouseOutCells() {
-        this.SetDisabledRowDeleteButton();
-        this.SetDisabledColDeleteButton();
+        this.setDisabledRowDeleteButton();
+        this.setDisabledColDeleteButton();
     }
 
     SetEnabledRowDeleteButton() {
@@ -71,16 +71,16 @@ class App extends Component {
             this.setState({rowDeleteButtonEnabled: true});
     }
 
-    SetEnabledColDeleteButton() {
+    setEnabledColDeleteButton() {
         if (this.totalCols > 1)
             this.setState({colDeleteButtonEnabled: true});
     }
 
-    SetDisabledRowDeleteButton() {
+    setDisabledRowDeleteButton() {
         this.setState({rowDeleteButtonEnabled: false});
     }
 
-    SetDisabledColDeleteButton() {
+    setDisabledColDeleteButton() {
         this.setState({colDeleteButtonEnabled: false});
     }
 
@@ -101,7 +101,7 @@ class App extends Component {
 
     deleteColumn() {
         if (this.totalCols > 1) {
-            this.SetDisabledColDeleteButton();
+            this.setDisabledColDeleteButton();
             let {data}  = this.state;
             let c = this.selectedCol;
             data.map(function (row) {return row.splice(c,1)});
@@ -112,7 +112,7 @@ class App extends Component {
 
     deleteRow() {
         if (this.totalRows > 1) {
-            this.SetDisabledRowDeleteButton();
+            this.setDisabledRowDeleteButton();
             let {data}  = this.state;
             data.splice(this.selectedRow,1);
             this.setState({data: data});
@@ -150,8 +150,8 @@ class App extends Component {
         </table>
         <button className = 'cells__buttons cells__add_button cells__add_row_button' onClick = {this.addRow}><i className='fa fa-plus'></i></button>
         <button className = 'cells__buttons cells__add_button cells__add_columm_button' onClick = {this.addColumn}><i className='fa fa-plus'></i></button>
-        <button style = {this.state.topStyle} className = {this.getClassNameDeleteRowButton()} onMouseOver = {this.SetEnabledRowDeleteButton} onMouseOut = {this.SetDisabledRowDeleteButton} onClick = {this.deleteRow}><i className='fa fa-minus'></i></button>
-        <button style = {this.state.leftStyle} className = {this.getClassNameDeleteColButton()} onMouseOver = {this.SetEnabledColDeleteButton} onMouseOut = {this.SetDisabledColDeleteButton} onClick = {this.deleteColumn}><i className='fa fa-minus'></i></button>
+        <button style = {this.state.topStyle} className = {this.getClassNameDeleteRowButton()} onMouseOver = {this.SetEnabledRowDeleteButton} onMouseOut = {this.setDisabledRowDeleteButton} onClick = {this.deleteRow}><i className='fa fa-minus'></i></button>
+        <button style = {this.state.leftStyle} className = {this.getClassNameDeleteColButton()} onMouseOver = {this.setEnabledColDeleteButton} onMouseOut = {this.setDisabledColDeleteButton} onClick = {this.deleteColumn}><i className='fa fa-minus'></i></button>
         </div>
     )
     }
